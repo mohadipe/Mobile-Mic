@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name" translatable="false">MobileMic</string>
+    <string name="no_ace">No ACE available on youre Device</string>
+    <string name="mic_off">Mic deaktiviert</string>
+    <string name="button_off">Deaktiviere Mic</string>
+    <string name="button_on">Aktiviere Mic</string>
+    <string name="mic_on">Mic aktiviert</string>
+    <string name="aktivate_bluetooth">\"Bitte Bluetooth Lautsprecher aktivieren.\"</string>
+</resources>

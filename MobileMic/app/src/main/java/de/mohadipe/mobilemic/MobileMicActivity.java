@@ -9,8 +9,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
+import hotchemi.android.rate.AppRate;
+import hotchemi.android.rate.OnClickButtonListener;
 import roboguice.activity.RoboFragmentActivity;
 
 public class MobileMicActivity extends RoboFragmentActivity implements MenuAdapter.OnItemClickListener {
@@ -22,12 +25,14 @@ public class MobileMicActivity extends RoboFragmentActivity implements MenuAdapt
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private String[] mMenuTitles;
-    private MobileMicFragment aktivesFragment;
+    private Fragment aktivesFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mobile_mic);
+
+        addRateDialog();
 
         mTitle = mDrawerTitle = getTitle();
         mMenuTitles = getResources().getStringArray(R.array.menu_array);
@@ -71,6 +76,25 @@ public class MobileMicActivity extends RoboFragmentActivity implements MenuAdapt
         }
     }
 
+    private void addRateDialog() {
+        AppRate.with(this)
+                .setInstallDays(0) // default 10, 0 means install day.
+                .setLaunchTimes(3) // default 10
+                .setRemindInterval(2) // default 1
+                .setShowLaterButton(true) // default true
+//                .setDebug(true) // default false
+                .setOnClickButtonListener(new OnClickButtonListener() { // callback listener.
+                    @Override
+                    public void onClickButton(int which) {
+                        Log.d(MobileMicActivity.class.getName(), Integer.toString(which));
+                    }
+                })
+                .monitor();
+
+        // Show a dialog if meets conditions
+        AppRate.showRateDialogIfMeetsConditions(this);
+    }
+
     /* The click listener for RecyclerView in the navigation drawer */
     @Override
     public void onClick(View view, int position) {
@@ -78,8 +102,7 @@ public class MobileMicActivity extends RoboFragmentActivity implements MenuAdapt
     }
 
     private void selectItem(int position) {
-        // update the main content by replacing fragments
-        MobileMicFragment fragment = new MobileMicFragment();
+        Fragment fragment = FragmentAdapter.getFragmentByName(mMenuTitles[position]);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -118,6 +141,10 @@ public class MobileMicActivity extends RoboFragmentActivity implements MenuAdapt
     }
 
     public void activateMic(View view) {
-        aktivesFragment.activateMic(view);
+        ((MobileMicFragment)aktivesFragment).activateMic(view);
+    }
+
+    public void callPaypalMe(View view) {
+        ((PaypalMeFragment)aktivesFragment).callPaypalMe();
     }
 }

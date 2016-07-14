@@ -9,7 +9,6 @@
     <string-array name="menu_array">
         <item>MobileMic</item>
         <item>Spenden</item>
-        <item>Feedback</item>
     </string-array>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
@@ -30,4 +29,6 @@
 
         ]]>
     </string>
+    <string name="danke_spende">Vielen Dank für deine Spende und viel Spaß mit MobielMic.</string>
+    <string name="spenden">Spenden</string>
 </resources>

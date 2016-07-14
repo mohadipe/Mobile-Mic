@@ -1,138 +1,123 @@
 package de.mohadipe.mobilemic;
 
-import android.content.Context;
-import android.media.AudioFormat;
-import android.media.AudioManager;
-import android.media.AudioRecord;
-import android.media.AudioTrack;
-import android.media.MediaRecorder;
-import android.media.audiofx.AcousticEchoCanceler;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
-import roboguice.activity.RoboActivity;
-import roboguice.inject.InjectView;
+import roboguice.activity.RoboFragmentActivity;
 
-public class MobileMicActivity extends RoboActivity {
+public class MobileMicActivity extends RoboFragmentActivity implements MenuAdapter.OnItemClickListener {
 
-    @InjectView(R.id.micButton)
-    Button micButton;
+    private DrawerLayout mDrawerLayout;
+    private RecyclerView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
 
-    private boolean micStatus;
-    private boolean recordingSchleife = false;
-    private AudioRecord recorder = null;
-    private AudioTrack track = null;
-    private MobileMicAppStatus mobileMicAppStatus = MobileMicAppStatus.AUS;
+    private CharSequence mDrawerTitle;
+    private CharSequence mTitle;
+    private String[] mMenuTitles;
+    private MobileMicFragment aktivesFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mobile_mic);
-        micStatus = false;
-    }
 
-    public void activateMic(View view) {
-        if (micStatus) {
-            deaktiviereMic();
-        } else {
-            aktiviereMic();
-        }
-    }
+        mTitle = mDrawerTitle = getTitle();
+        mMenuTitles = getResources().getStringArray(R.array.menu_array);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (RecyclerView) findViewById(R.id.left_drawer);
 
-    private void aktiviereMic() {
-        AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-        audioManager.setBluetoothScoOn(true);
-        if (audioManager.isBluetoothA2dpOn()) {
-            startRecording();
-        } else {
-            Toast.makeText(getApplicationContext(), R.string.aktivate_bluetooth, 2000).show();
-        }
-    }
+        // set a custom shadow that overlays the main content when the drawer opens
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        // improve performance by indicating the list if fixed size.
+        mDrawerList.setHasFixedSize(true);
 
-    private void startRecording() {
-        micStatus = true;
-        micButton.setText(R.string.button_off);
-        recordingSchleife = false;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Log.i("Audio", "Running Audio Thread");
-                short[][] buffers = new short[256][160];
-                int ix = 0;
+        // set up the drawer's list view with items and click listener
+        mDrawerList.setAdapter(new MenuAdapter(mMenuTitles, this));
+        // enable ActionBar app icon to behave as action to toggle nav drawer
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
 
-                /*
-                 * Initialize buffer to hold continuously recorded audio data, start recording, and start
-                 * playback.
-                 */
-                try {
-                    int sampleRateInHz = 8000;
-                    int N = AudioRecord.getMinBufferSize(sampleRateInHz, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
-                    int bufferSizeInBytes = N * 10;
-                    recorder = new AudioRecord(MediaRecorder.AudioSource.MIC, sampleRateInHz, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, bufferSizeInBytes);
-                    AcousticEchoCanceler.create(recorder.getAudioSessionId());
-                    if (AcousticEchoCanceler.isAvailable()) {
-                        mobileMicAppStatus = MobileMicAppStatus.AN_RECORDING;
-                        Log.i("ACE-Ready", "Device implements ACE");
-
-                        track = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRateInHz,
-                                AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT, bufferSizeInBytes, AudioTrack.MODE_STREAM);
-                        recorder.startRecording();
-                        track.play();
-                        /*
-                         * Loops until something outside of this thread stops it.
-                         * Reads the data from the recorder and writes it to the audio track for playback.
-                         */
-                        while (!recordingSchleife) {
-                            Log.i("Map", "Writing new data to buffer");
-                            short[] buffer = buffers[ix++ % buffers.length];
-                            N = recorder.read(buffer, 0, buffer.length);
-                            track.write(buffer, 0, buffer.length);
-                        }
-                    } else {
-                        mobileMicAppStatus = MobileMicAppStatus.AN_NO_ACE;
-                    }
-                } catch (Throwable x) {
-                    Log.w("Audio", "Error reading voice audio", x);
-                }
+        // ActionBarDrawerToggle ties together the the proper interactions
+        // between the sliding drawer and the action bar app icon
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawerLayout,         /* DrawerLayout object */
+                R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
+                R.string.drawer_open,  /* "open drawer" description for accessibility */
+                R.string.drawer_close  /* "close drawer" description for accessibility */
+        ) {
+            public void onDrawerClosed(View view) {
+                getActionBar().setTitle(mTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
-        }).start();
-        if (mobileMicAppStatus.equals(MobileMicAppStatus.AN_NO_ACE)) {
-            Toast.makeText(getApplicationContext(), R.string.no_ace, 2000).show();
-        }
-        if (mobileMicAppStatus.equals(MobileMicAppStatus.AN_RECORDING)) {
-            Toast.makeText(getApplicationContext(), R.string.mic_on, 2000).show();
-        }
 
+            public void onDrawerOpened(View drawerView) {
+                getActionBar().setTitle(mDrawerTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        if (savedInstanceState == null) {
+            selectItem(0);
+        }
+    }
+
+    /* The click listener for RecyclerView in the navigation drawer */
+    @Override
+    public void onClick(View view, int position) {
+        selectItem(position);
+    }
+
+    private void selectItem(int position) {
+        // update the main content by replacing fragments
+        MobileMicFragment fragment = new MobileMicFragment();
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(R.id.content_frame, fragment);
+        aktivesFragment = fragment;
+        ft.commit();
+
+        // update selected item title, then close the drawer
+        setTitle(mMenuTitles[position]);
+        mDrawerLayout.closeDrawer(mDrawerList);
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        deaktiviereMic();
+    public void setTitle(CharSequence title) {
+        mTitle = title;
+        getActionBar().setTitle(mTitle);
     }
 
-    private void deaktiviereMic() {
-        if (micStatus) {
-            Toast.makeText(getApplicationContext(), R.string.mic_off, 2000).show();
-            micButton.setText(R.string.button_on);
-            micStatus = false;
-            try {
-                if (recorder != null) {
-                    recorder.stop();
-                    recorder.release();
-                    track.stop();
-                    track.release();
-                    recordingSchleife = true;
-                    mobileMicAppStatus = MobileMicAppStatus.AUS;
-                }
-            } catch (IllegalStateException e) {
-                Log.w("Audio", "Recorder & Track beenden: " + e.getMessage());
-            }
+    /**
+     * When using the ActionBarDrawerToggle, you must call it during
+     * onPostCreate() and onConfigurationChanged()...
+     */
 
-        }
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggls
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    public void activateMic(View view) {
+        aktivesFragment.activateMic(view);
     }
 }

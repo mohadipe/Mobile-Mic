@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import de.mohadipe.mobilemic.aec.JAEC;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
 
@@ -74,6 +75,7 @@ public class MobileMicFragment extends RoboFragment {
                  */
                 try {
                     int sampleRateInHz = 8000;
+//                    int tailLength = 0; //nicht von JAEC verwendet, fix 2000
                     int N = AudioRecord.getMinBufferSize(sampleRateInHz, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
                     int bufferSizeInBytes = N * 10;
                     recorder = new AudioRecord(MediaRecorder.AudioSource.VOICE_COMMUNICATION, sampleRateInHz, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, bufferSizeInBytes);
@@ -93,7 +95,7 @@ public class MobileMicFragment extends RoboFragment {
                          */
                         while (!recordingSchleife) {
                             short[] buffer = buffers[ix++ % buffers.length];
-                            N = recorder.read(buffer, 0, buffer.length);
+                            recorder.read(buffer, 0, buffer.length);
                             track.write(buffer, 0, buffer.length);
                         }
                     } else {

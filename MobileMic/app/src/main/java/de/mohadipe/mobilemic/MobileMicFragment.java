@@ -7,6 +7,7 @@ import android.media.AudioRecord;
 import android.media.AudioTrack;
 import android.media.MediaRecorder;
 import android.media.audiofx.AcousticEchoCanceler;
+import android.media.audiofx.AudioEffect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -79,8 +80,9 @@ public class MobileMicFragment extends RoboFragment {
                     int N = AudioRecord.getMinBufferSize(sampleRateInHz, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
                     int bufferSizeInBytes = N * 10;
                     recorder = new AudioRecord(MediaRecorder.AudioSource.VOICE_COMMUNICATION, sampleRateInHz, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, bufferSizeInBytes);
-                    AcousticEchoCanceler.create(recorder.getAudioSessionId());
                     if (AcousticEchoCanceler.isAvailable()) {
+                        AcousticEchoCanceler acousticEchoCanceler = AcousticEchoCanceler.create(recorder.getAudioSessionId());
+                        acousticEchoCanceler.setEnabled(true);
                         mobileMicAppStatus = MobileMicAppStatus.AN_RECORDING;
                         Log.i("ACE-Ready", "Device implements ACE");
 

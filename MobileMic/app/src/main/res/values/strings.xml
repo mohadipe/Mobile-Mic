@@ -15,4 +15,15 @@
 
     <string name="danke_spende">Vielen Dank für deine Spende und viel Spaß mit MobileMic.</string>
     <string name="spenden">Spenden</string>
+    <string name="googleplay_shortDesc">Verwende dein Smartphone als Microphone in Verbindung mit einer Bluetooth-Box.</string>
+    <string name="googleplay_desc">Du hast nicht eben schnell mal ein Microphone-System mit Lautsprechern zur Hand? Bist aber in der Situation vor einer Gruppe von Menschen zu sprechen und befürchtest, dass dich nicht alle Zuhörer gut verstehen können.
+
+MobileMic hilft dir in dieser Situation. Schliesse einen Bluetooth-Lautsprecher an dein Smartphone an und aktiviere das Microphone deines Smartphones mittels MobileMic.
+
+Funktionen:
+- Acoustic Echo Cancellation: Nicht alle Smartphones haben diese Funktion. Leider kommt es selbst mit dieser Funktion zu leichten Echos, abhängig von der Lautstärke und der Entfernung zwischen Smartphone und Lautsprecher.
+
+Unterstützte Smartphones:
+- Nexus 5x
+- Ich suche Tester und bitte um Feedback</string>
 </resources>

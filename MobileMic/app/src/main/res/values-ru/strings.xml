@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MobileMic</string>
+    <string name="aktivate_bluetooth"> Пожалуйста, включите акустические системы Bluetooth .</string>
+    <string name="button_off"> отключить микрофон</string>
+    <string name="button_on"> активировать микрофон</string>
+    <string name="danke_spende"> Благодарим Вас за Ваше пожертвование и получайте удовольствие от MobileMic </string>
+    <string name="drawer_close"> пряжка Меню</string>
+    <string name="drawer_open"> Открыть меню</string>
+    <string name="mic_off">Mic отключен</string>
+    <string name="mic_on">активированный Mic</string>
+    <string name="no_ace"> AcousticEchoCancelation не доступно для данного устройства</string>
+    <string name="spenden">жертвовать</string>
+</resources>

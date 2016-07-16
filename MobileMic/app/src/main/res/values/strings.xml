@@ -1,18 +1,17 @@
 <resources>
     <string name="app_name" translatable="false">MobileMic</string>
-    <string name="no_ace">No ACE available on youre Device</string>
+    <string name="no_ace">AcousticEchoCancelation ist für dieses Gerät nicht verfügbar</string>
     <string name="mic_off">Mic deaktiviert</string>
     <string name="button_off">Deaktiviere Mic</string>
     <string name="button_on">Aktiviere Mic</string>
     <string name="mic_on">Mic aktiviert</string>
-    <string name="aktivate_bluetooth">\"Bitte Bluetooth Lautsprecher aktivieren.\"</string>
+    <string name="aktivate_bluetooth">Bitte Bluetooth Lautsprecher aktivieren.</string>
     <string-array name="menu_array">
         <item>MobileMic</item>
         <item>Spenden</item>
     </string-array>
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
-    <string name="action_websearch">Web search</string>
+    <string name="drawer_open">Öffne Menu</string>
+    <string name="drawer_close">Schliesse Menu</string>
 
     <string name="danke_spende">Vielen Dank für deine Spende und viel Spaß mit MobileMic.</string>
     <string name="spenden">Spenden</string>

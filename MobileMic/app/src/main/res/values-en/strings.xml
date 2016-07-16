@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MobileMic</string>
+    <string name="aktivate_bluetooth">Please activate Bluetooth-Speakers</string>
+    <string name="button_off">Deactivate Mic</string>
+    <string name="button_on">Activate Mic</string>
+    <string name="danke_spende"> Thank you for your donation and have fun with MobileMic .</string>
+    <string name="drawer_close">Close Menu</string>
+    <string name="drawer_open">Open Menu</string>
+    <string name="mic_off">Mic deactivated</string>
+    <string name="mic_on">Mic activated</string>
+    <string name="no_ace">AcousticEchoCancelation is not available for this device</string>
+    <string name="spenden">donate</string>
+</resources>

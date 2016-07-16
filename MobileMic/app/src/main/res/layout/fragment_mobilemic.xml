@@ -26,7 +26,7 @@
         <Button
             android:layout_width="205dp"
             android:layout_height="wrap_content"
-            android:text="Aktiviere Mic"
+            android:text="@string/button_on"
             android:id="@+id/micButton"
             android:layout_gravity="center_horizontal"
             android:onClick="activateMic"

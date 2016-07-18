@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.mohadipe.mobilemic;
+package de.mohadipe.smartmic;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

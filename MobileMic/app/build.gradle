@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "de.mohadipe.mobilemic"
+        applicationId "de.mohadipe.smartmic"
         minSdkVersion 18
         targetSdkVersion 24
         versionCode 1

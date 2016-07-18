@@ -3,7 +3,7 @@
     <string name="aktivate_bluetooth">Please activate Bluetooth-Speakers</string>
     <string name="button_off">Deactivate Mic</string>
     <string name="button_on">Activate Mic</string>
-    <string name="danke_spende"> Thank you for your donation and have fun with MobileMic .</string>
+    <string name="danke_spende"> Thank you for your donation and have fun with SmartMic.</string>
     <string name="drawer_close">Close Menu</string>
     <string name="drawer_open">Open Menu</string>
     <string name="mic_off">Mic deactivated</string>
@@ -11,9 +11,9 @@
     <string name="no_ace">AcousticEchoCancelation is not available for this device</string>
     <string name="spenden">donate</string>
     <string-array name="menu_array">
-        <item>MobileMic</item>
+        <item>SmartMic</item>
         <item>donate</item>
     </string-array>
     <string name="googleplay_shortDesc">Use your smartphone as a microphone in conjunction with a Bluetooth Box .</string>
-    <string name="googleplay_desc">You do not just fast times a Microphone System with speakers on hand ? but Are in the situation to a group of people to talk to and are afraid that you can not understand all listeners well.  MobileMic help you in this situation . Clasp a Bluetooth speaker to your Smartphone and activate the microphone of your smartphone by MobileMic.  Features: - Acoustic Echo Cancellation : Not all smartphones have this feature . Unfortunately, it also comes with this function to light echoes, depending on the volume and the distance between smartphone and speakers.  Supported smartphones: - Nexus 5x - Seeking tester and ask for feedback</string>
+    <string name="googleplay_desc">You do not just fast times a Microphone System with speakers on hand ? but Are in the situation to a group of people to talk to and are afraid that you can not understand all listeners well.  SmartMic help you in this situation . Clasp a Bluetooth speaker to your Smartphone and activate the microphone of your smartphone by SmartMic.  Features: - Acoustic Echo Cancellation : Not all smartphones have this feature . Unfortunately, it also comes with this function to light echoes, depending on the volume and the distance between smartphone and speakers.  Supported smartphones: - Nexus 5x - Seeking tester and ask for feedback</string>
 </resources>

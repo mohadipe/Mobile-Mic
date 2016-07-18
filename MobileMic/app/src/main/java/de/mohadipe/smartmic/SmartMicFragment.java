@@ -1,4 +1,4 @@
-package de.mohadipe.mobilemic;
+package de.mohadipe.smartmic;
 
 import android.content.Context;
 import android.media.AudioFormat;
@@ -18,7 +18,7 @@ import android.widget.Toast;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
 
-public class MobileMicFragment extends RoboFragment {
+public class SmartMicFragment extends RoboFragment {
 
     @InjectView(R.id.micButton)
     Button micButton;
@@ -27,15 +27,15 @@ public class MobileMicFragment extends RoboFragment {
     private boolean recordingSchleife = false;
     private AudioRecord recorder = null;
     private AudioTrack track = null;
-    private MobileMicAppStatus mobileMicAppStatus = MobileMicAppStatus.AUS;
+    private SmartMicAppStatus smartMicAppStatus = SmartMicAppStatus.AUS;
 
-    public MobileMicFragment() {
+    public SmartMicFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_mobilemic, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_smartmic, container, false);
         return rootView;
     }
 
@@ -81,7 +81,7 @@ public class MobileMicFragment extends RoboFragment {
                     if (AcousticEchoCanceler.isAvailable()) {
                         AcousticEchoCanceler acousticEchoCanceler = AcousticEchoCanceler.create(recorder.getAudioSessionId());
                         acousticEchoCanceler.setEnabled(true);
-                        mobileMicAppStatus = MobileMicAppStatus.AN_RECORDING;
+                        smartMicAppStatus = SmartMicAppStatus.AN_RECORDING;
                         Log.i("ACE-Ready", "Device implements ACE");
 
                         track = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRateInHz,
@@ -99,17 +99,17 @@ public class MobileMicFragment extends RoboFragment {
                             track.write(buffer, 0, buffer.length);
                         }
                     } else {
-                        mobileMicAppStatus = MobileMicAppStatus.AN_NO_ACE;
+                        smartMicAppStatus = SmartMicAppStatus.AN_NO_ACE;
                     }
                 } catch (Throwable x) {
                     Log.w("Audio", "Error reading voice audio", x);
                 }
             }
         }).start();
-        if (mobileMicAppStatus.equals(MobileMicAppStatus.AN_NO_ACE)) {
+        if (smartMicAppStatus.equals(SmartMicAppStatus.AN_NO_ACE)) {
             Toast.makeText(getActivity().getApplicationContext(), R.string.no_ace, Toast.LENGTH_LONG).show();
         }
-        if (mobileMicAppStatus.equals(MobileMicAppStatus.AN_RECORDING)) {
+        if (smartMicAppStatus.equals(SmartMicAppStatus.AN_RECORDING)) {
             Toast.makeText(getActivity().getApplicationContext(), R.string.mic_on, Toast.LENGTH_LONG).show();
         }
 
@@ -133,7 +133,7 @@ public class MobileMicFragment extends RoboFragment {
                     track.stop();
                     track.release();
                     recordingSchleife = true;
-                    mobileMicAppStatus = MobileMicAppStatus.AUS;
+                    smartMicAppStatus = SmartMicAppStatus.AUS;
                 }
             } catch (IllegalStateException e) {
                 Log.w("Audio", "Recorder & Track beenden: " + e.getMessage());

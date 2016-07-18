@@ -1,4 +1,4 @@
-package de.mohadipe.mobilemic;
+package de.mohadipe.smartmic;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">MobileMic</string>
+    <string name="app_name" translatable="false">SmartMic</string>
     <string name="no_ace">AcousticEchoCancelation ist für dieses Gerät nicht verfügbar</string>
     <string name="mic_off">Mic deaktiviert</string>
     <string name="button_off">Deaktiviere Mic</string>
@@ -7,18 +7,18 @@
     <string name="mic_on">Mic aktiviert</string>
     <string name="aktivate_bluetooth">Bitte Bluetooth Lautsprecher aktivieren.</string>
     <string-array name="menu_array">
-        <item>MobileMic</item>
+        <item>SmartMic</item>
         <item>Spenden</item>
     </string-array>
     <string name="drawer_open">Öffne Menu</string>
     <string name="drawer_close">Schliesse Menu</string>
 
-    <string name="danke_spende">Vielen Dank für deine Spende und viel Spaß mit MobileMic.</string>
+    <string name="danke_spende">Vielen Dank für deine Spende und viel Spaß mit SmartMic.</string>
     <string name="spenden">Spenden</string>
     <string name="googleplay_shortDesc">Verwende dein Smartphone als Microphone in Verbindung mit einer Bluetooth-Box.</string>
     <string name="googleplay_desc">Du hast nicht eben schnell mal ein Microphone-System mit Lautsprechern zur Hand? Bist aber in der Situation vor einer Gruppe von Menschen zu sprechen und befürchtest, dass dich nicht alle Zuhörer gut verstehen können.
 
-MobileMic hilft dir in dieser Situation. Schliesse einen Bluetooth-Lautsprecher an dein Smartphone an und aktiviere das Microphone deines Smartphones mittels MobileMic.
+SmartMic hilft dir in dieser Situation. Schliesse einen Bluetooth-Lautsprecher an dein Smartphone an und aktiviere das Microphone deines Smartphones mittels SmartMic.
 
 Funktionen:
 - Acoustic Echo Cancellation: Nicht alle Smartphones haben diese Funktion. Leider kommt es selbst mit dieser Funktion zu leichten Echos, abhängig von der Lautstärke und der Entfernung zwischen Smartphone und Lautsprecher.

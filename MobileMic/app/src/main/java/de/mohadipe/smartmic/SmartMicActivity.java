@@ -1,4 +1,4 @@
-package de.mohadipe.mobilemic;
+package de.mohadipe.smartmic;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -16,7 +16,7 @@ import hotchemi.android.rate.AppRate;
 import hotchemi.android.rate.OnClickButtonListener;
 import roboguice.activity.RoboFragmentActivity;
 
-public class MobileMicActivity extends RoboFragmentActivity implements MenuAdapter.OnItemClickListener {
+public class SmartMicActivity extends RoboFragmentActivity implements MenuAdapter.OnItemClickListener {
 
     private DrawerLayout mDrawerLayout;
     private RecyclerView mDrawerList;
@@ -30,7 +30,7 @@ public class MobileMicActivity extends RoboFragmentActivity implements MenuAdapt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mobile_mic);
+        setContentView(R.layout.activity_smart_mic);
 
         addRateDialog();
 
@@ -86,7 +86,7 @@ public class MobileMicActivity extends RoboFragmentActivity implements MenuAdapt
                 .setOnClickButtonListener(new OnClickButtonListener() { // callback listener.
                     @Override
                     public void onClickButton(int which) {
-                        Log.d(MobileMicActivity.class.getName(), Integer.toString(which));
+                        Log.d(SmartMicActivity.class.getName(), Integer.toString(which));
                     }
                 })
                 .monitor();
@@ -141,7 +141,7 @@ public class MobileMicActivity extends RoboFragmentActivity implements MenuAdapt
     }
 
     public void activateMic(View view) {
-        ((MobileMicFragment)aktivesFragment).activateMic(view);
+        ((SmartMicFragment)aktivesFragment).activateMic(view);
     }
 
     public void callPaypalMe(View view) {

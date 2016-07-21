@@ -16,4 +16,5 @@
     </string-array>
     <string name="googleplay_shortDesc">Use your smartphone as a microphone in conjunction with a Bluetooth Box .</string>
     <string name="googleplay_desc">You do not just fast times a Microphone System with speakers on hand ? but Are in the situation to a group of people to talk to and are afraid that you can not understand all listeners well.  SmartMic help you in this situation . Clasp a Bluetooth speaker to your Smartphone and activate the microphone of your smartphone by SmartMic.  Features: - Acoustic Echo Cancellation : Not all smartphones have this feature . Unfortunately, it also comes with this function to light echoes, depending on the volume and the distance between smartphone and speakers.  Supported smartphones: - Nexus 5x - Seeking tester and ask for feedback</string>
+    <string name="no_permission_record_audio"> Without being able to have the right to record audio data is the app unfortunately useless for you .</string>
 </resources>

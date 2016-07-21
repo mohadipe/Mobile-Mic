@@ -12,7 +12,7 @@
     </string-array>
     <string name="drawer_open">Öffne Menu</string>
     <string name="drawer_close">Schliesse Menu</string>
-
+    <string name="no_permission_record_audio">Ohne das Recht Audiodaten aufnehmen zu können ist die App leider nutzlos für dich.</string>
     <string name="danke_spende">Vielen Dank für deine Spende und viel Spaß mit SmartMic.</string>
     <string name="spenden">Spenden</string>
     <string name="googleplay_shortDesc">Verwende dein Smartphone als Microphone in Verbindung mit einer Bluetooth-Box.</string>

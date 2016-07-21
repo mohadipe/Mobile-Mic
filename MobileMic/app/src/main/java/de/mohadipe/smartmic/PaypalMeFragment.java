@@ -6,15 +6,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import roboguice.fragment.RoboFragment;
-import roboguice.inject.InjectView;
 
-public class PaypalMeFragment extends RoboFragment {
-
-    @InjectView(R.id.paypalme_Button)
-    Button paypalMeButton;
+public class PaypalMeFragment extends RoboFragment implements FragmentInterface {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -27,5 +22,20 @@ public class PaypalMeFragment extends RoboFragment {
         Uri uri = Uri.parse("http://paypal.me/mohadipe");
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
+    }
+
+    @Override
+    public void disableFunction() {
+        //Do nothing
+    }
+
+    @Override
+    public void enableFunction() {
+        //Do nothing
+    }
+
+    @Override
+    public void activateMic(View view) {
+        //Do nothing
     }
 }

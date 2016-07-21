@@ -18,7 +18,7 @@ import android.widget.Toast;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
 
-public class SmartMicFragment extends RoboFragment {
+public class SmartMicFragment extends RoboFragment implements FragmentInterface {
 
     @InjectView(R.id.micButton)
     Button micButton;
@@ -28,6 +28,7 @@ public class SmartMicFragment extends RoboFragment {
     private AudioRecord recorder = null;
     private AudioTrack track = null;
     private SmartMicAppStatus smartMicAppStatus = SmartMicAppStatus.AUS;
+    private boolean micButtonEnabled = false;
 
     public SmartMicFragment() {
     }
@@ -36,6 +37,8 @@ public class SmartMicFragment extends RoboFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_smartmic, container, false);
+        micButton = (Button) rootView.findViewById(R.id.micButton);
+        this.micButton.setEnabled(micButtonEnabled);
         return rootView;
     }
 
@@ -140,5 +143,26 @@ public class SmartMicFragment extends RoboFragment {
             }
 
         }
+    }
+
+    @Override
+    public void disableFunction() {
+        if (this.micButton != null) {
+            this.micButton.setEnabled(false);
+        }
+        this.micButtonEnabled = false;
+    }
+
+    @Override
+    public void enableFunction() {
+        if (this.micButton != null) {
+            this.micButton.setEnabled(true);
+        }
+        this.micButtonEnabled = true;
+    }
+
+    @Override
+    public void callPaypalMe() {
+        // Do nothing
     }
 }

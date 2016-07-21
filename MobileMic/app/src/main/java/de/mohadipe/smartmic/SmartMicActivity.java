@@ -1,22 +1,32 @@
 package de.mohadipe.smartmic;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import hotchemi.android.rate.AppRate;
 import hotchemi.android.rate.OnClickButtonListener;
 import roboguice.activity.RoboFragmentActivity;
 
 public class SmartMicActivity extends RoboFragmentActivity implements MenuAdapter.OnItemClickListener {
+
+    private static final int MY_PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
+    static final String ACTIVE_FRAGMENT = "activeFragment";
 
     private DrawerLayout mDrawerLayout;
     private RecyclerView mDrawerList;
@@ -26,6 +36,7 @@ public class SmartMicActivity extends RoboFragmentActivity implements MenuAdapte
     private CharSequence mTitle;
     private String[] mMenuTitles;
     private Fragment aktivesFragment;
+    private int menuPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,14 +83,34 @@ public class SmartMicActivity extends RoboFragmentActivity implements MenuAdapte
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         if (savedInstanceState == null) {
-            selectItem(0);
+            selectItem(menuPosition);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+//        outPersistentState.putInt(ACTIVE_FRAGMENT, this.menuPosition);
+        outState.putInt(ACTIVE_FRAGMENT, this.menuPosition);
+        super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        this.menuPosition = (int) savedInstanceState.get(ACTIVE_FRAGMENT);
+        selectItem(this.menuPosition);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkPermissions(Manifest.permission.RECORD_AUDIO, MY_PERMISSIONS_REQUEST_RECORD_AUDIO);
     }
 
     private void addRateDialog() {
         AppRate.with(this)
-                .setInstallDays(0) // default 10, 0 means install day.
-                .setLaunchTimes(3) // default 10
+//                .setInstallDays(0) // default 10, 0 means install day.
+//                .setLaunchTimes(3) // default 10
                 .setRemindInterval(2) // default 1
                 .setShowLaterButton(true) // default true
 //                .setDebug(true) // default false
@@ -108,6 +139,7 @@ public class SmartMicActivity extends RoboFragmentActivity implements MenuAdapte
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(R.id.content_frame, fragment);
         aktivesFragment = fragment;
+        this.menuPosition = position;
         ft.commit();
 
         // update selected item title, then close the drawer
@@ -141,10 +173,55 @@ public class SmartMicActivity extends RoboFragmentActivity implements MenuAdapte
     }
 
     public void activateMic(View view) {
-        ((SmartMicFragment)aktivesFragment).activateMic(view);
+        ((FragmentInterface)aktivesFragment).activateMic(view);
     }
 
     public void callPaypalMe(View view) {
-        ((PaypalMeFragment)aktivesFragment).callPaypalMe();
+        ((FragmentInterface)aktivesFragment).callPaypalMe();
+    }
+
+    private void checkPermissions(@NonNull String permission, int callBackValue) {
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+            // Should we show an explanation?
+            Log.d("CheckSelfPermission: ", "Not Granted");
+            ((FragmentInterface)aktivesFragment).disableFunction();
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    permission)) {
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this,
+                        new String[]{permission},
+                        callBackValue);
+            }
+        } else {
+            Log.d("CheckSelfPermission: ", "Not Granted");
+            ((FragmentInterface)aktivesFragment).enableFunction();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_RECORD_AUDIO: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    ((FragmentInterface)aktivesFragment).enableFunction();
+                } else {
+                    ((FragmentInterface)aktivesFragment).disableFunction();
+                    Toast.makeText(this.getApplicationContext(), R.string.no_permission_record_audio, Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
     }
 }

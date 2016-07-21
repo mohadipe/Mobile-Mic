@@ -14,6 +14,6 @@ public final class FragmentAdapter {
         if (PAYPAL_ME.equals(fragmentName)) {
             return new PaypalMeFragment();
         }
-        return null;
+        return new SmartMicFragment();
     }
 }

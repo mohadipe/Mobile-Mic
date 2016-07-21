@@ -89,7 +89,6 @@ public class SmartMicActivity extends RoboFragmentActivity implements MenuAdapte
 
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-//        outPersistentState.putInt(ACTIVE_FRAGMENT, this.menuPosition);
         outState.putInt(ACTIVE_FRAGMENT, this.menuPosition);
         super.onSaveInstanceState(outState, outPersistentState);
     }
@@ -145,6 +144,7 @@ public class SmartMicActivity extends RoboFragmentActivity implements MenuAdapte
         // update selected item title, then close the drawer
         setTitle(mMenuTitles[position]);
         mDrawerLayout.closeDrawer(mDrawerList);
+        checkPermissions(Manifest.permission.RECORD_AUDIO, MY_PERMISSIONS_REQUEST_RECORD_AUDIO);
     }
 
     @Override

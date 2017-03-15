@@ -94,11 +94,18 @@ public class SmartMicActivity extends RoboFragmentActivity implements MenuAdapte
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(ACTIVE_FRAGMENT, this.menuPosition);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         this.menuPosition = (int) savedInstanceState.get(ACTIVE_FRAGMENT);
         selectItem(this.menuPosition);
     }
+
 
     @Override
     protected void onResume() {

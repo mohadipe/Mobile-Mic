@@ -1,15 +1,22 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'mohadipe'
+            keyPassword 'lg3UON7MAsHSd9psb3q1'
+            storeFile file('C:/Users/Mohadipe/AndroidKeystore/keystore.jks')
+            storePassword 'FPUk4at7YGDLtIC2dSeN'
+        }
+    }
     compileSdkVersion 24
     buildToolsVersion '25.0.0'
-
     defaultConfig {
         applicationId "de.mohadipe.mobilemic"
         minSdkVersion 18
         targetSdkVersion 24
-        versionCode 3
-        versionName "1.2"
+        versionCode 4
+        versionName "1.3"
     }
     buildTypes {
         release {
@@ -20,9 +27,9 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.8.2'
-    compile group: 'com.github.rwl', name: 'jtransforms', version: '2.4.0'
+    compile 'com.github.rwl:jtransforms:2.4.0'
     compile 'com.github.hotchemi:android-rate:1.0.1'
     compile 'com.android.support:appcompat-v7:24.0.0'
     compile 'com.android.support:recyclerview-v7:24.0.0'
@@ -30,5 +37,5 @@ dependencies {
     compile 'com.android.support:cardview-v7:24.0.0'
     compile 'org.roboguice:roboguice:3.0.1'
     provided 'org.roboguice:roboblender:3.0.1'
-    compile group: 'com.github.rwl', name: 'jtransforms', version: '2.4.0'
+    compile 'com.github.rwl:jtransforms:2.4.0'
 }
